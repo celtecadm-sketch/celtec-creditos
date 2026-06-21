@@ -1,0 +1,11 @@
+Coloca aquí las fotos de los 5 equipos con EXACTAMENTE estos nombres
+(así el catálogo las reconoce automáticamente, sin tocar código):
+
+samsung-a07.jpg
+redmi-a5.jpg
+motorola-g06-64.jpg
+motorola-g06-128.jpg
+samsung-a17.jpg
+
+Mientras no estén, el catálogo muestra un aviso de "foto próximamente"
+en su lugar — la página funciona igual, solo sin imagen.
