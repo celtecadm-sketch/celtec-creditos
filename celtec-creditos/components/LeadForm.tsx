@@ -48,26 +48,23 @@ export default function LeadForm({
     const form = e.currentTarget;
     const nombre = (form.elements.namedItem("nombre") as HTMLInputElement).value;
     const whatsapp = (form.elements.namedItem("whatsapp") as HTMLInputElement).value;
-
-    // TODO: cuando exista el backend, aquí se hace el POST real con:
-    // { productoId: producto.id, nombre, whatsapp, disponibilidad }
     console.log({ productoId: producto.id, nombre, whatsapp, disponibilidad });
-
     setPaso("enviado");
   }
 
   return (
     <div className="fixed inset-0 z-50 bg-bg/90 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
       <div className="bg-surface border border-white/10 rounded-t-2xl sm:rounded-2xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto">
-        {/* Header común */}
-        <div className="flex items-start justify-between mb-4">
-          <p className="text-[11px] font-mono uppercase tracking-wide text-inkmuted">
+
+        {/* Header */}
+        <div className="flex items-start justify-between mb-5">
+          <p className="text-sm font-mono text-inkmuted">
             {producto.nombre} · {producto.almacenamiento}
           </p>
           <button
             type="button"
             onClick={onClose}
-            className="text-inkmuted hover:text-ink text-xl leading-none"
+            className="text-inkmuted hover:text-ink text-2xl leading-none"
             aria-label="Cerrar"
           >
             ×
@@ -77,28 +74,33 @@ export default function LeadForm({
         {/* PASO 1: Requisitos */}
         {paso === "requisitos" && (
           <div className="space-y-5">
-            <h3 className="font-display font-bold text-xl">
+            <h3 className="font-display font-bold text-2xl text-ink">
               Para tu plan necesitarás:
             </h3>
-            <ul className="space-y-2">
+
+            <ul className="space-y-3">
               {REQUISITOS.map((r) => (
-                <li key={r} className="flex items-center gap-2 text-sm text-ink/90">
-                  <span className="text-celtec-green">✓</span>
-                  {r}
+                <li key={r} className="flex items-center gap-3">
+                  <span className="text-celtec-green text-xl font-bold">✓</span>
+                  <span className="text-lg text-ink font-medium">{r}</span>
                 </li>
               ))}
             </ul>
-            <p className="font-display font-bold pt-2">¿Ya cuentas con todo esto?</p>
-            <div className="flex flex-col gap-2.5">
+
+            <p className="font-display font-bold text-xl text-ink pt-2">
+              ¿Ya cuentas con todo esto?
+            </p>
+
+            <div className="flex flex-col gap-3 pt-1">
               <button
                 onClick={elegirSiTengo}
-                className="w-full bg-celtec-yellow hover:bg-celtec-yellowdark text-bg font-display font-bold py-3.5 rounded-xl transition-colors"
+                className="w-full bg-celtec-green hover:bg-celtec-greendark text-white font-display font-bold text-lg py-4 rounded-xl transition-colors"
               >
                 Sí, lo tengo
               </button>
               <button
                 onClick={elegirAunNo}
-                className="w-full bg-surface2 hover:bg-white/10 text-ink font-display font-semibold py-3.5 rounded-xl transition-colors border border-white/10"
+                className="w-full bg-transparent hover:bg-white/10 text-ink font-display font-bold text-lg py-4 rounded-xl transition-colors border-2 border-white/40 hover:border-white/60"
               >
                 Aún no
               </button>
@@ -106,18 +108,18 @@ export default function LeadForm({
           </div>
         )}
 
-        {/* PASO 2: Tiempo (solo si dijo "Aún no") */}
+        {/* PASO 2: Tiempo */}
         {paso === "tiempo" && (
           <div className="space-y-5">
-            <h3 className="font-display font-bold text-xl">
+            <h3 className="font-display font-bold text-2xl text-ink">
               ¿Para cuándo lo tendrías?
             </h3>
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col gap-3">
               {OPCIONES_TIEMPO.map((op) => (
                 <button
                   key={op.value}
                   onClick={() => elegirTiempo(op.value)}
-                  className="w-full text-left bg-surface2 hover:bg-white/10 text-ink font-medium py-3.5 px-4 rounded-xl transition-colors border border-white/10"
+                  className="w-full text-left bg-surface2 hover:bg-white/10 text-ink font-medium text-lg py-4 px-4 rounded-xl transition-colors border border-white/15 hover:border-white/30"
                 >
                   {op.label}
                 </button>
@@ -126,37 +128,37 @@ export default function LeadForm({
           </div>
         )}
 
-        {/* PASO 3: Datos (nombre + whatsapp) */}
+        {/* PASO 3: Datos */}
         {paso === "datos" && (
           <form onSubmit={handleSubmit} className="space-y-4">
-            <h3 className="font-display font-bold text-xl">Casi listo</h3>
-            <p className="text-sm text-inkmuted -mt-2">
+            <h3 className="font-display font-bold text-2xl text-ink">Casi listo</h3>
+            <p className="text-inkmuted">
               Déjanos tus datos y te contactamos por WhatsApp.
             </p>
 
             <label className="block">
-              <span className="text-xs text-inkmuted mb-1 block">Nombre completo</span>
+              <span className="text-sm text-inkmuted mb-1.5 block">Nombre completo</span>
               <input
                 type="text"
                 name="nombre"
                 required
-                className="w-full bg-surface2 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-ink focus:border-celtec-yellow outline-none transition-colors"
+                className="w-full bg-surface2 border border-white/10 rounded-lg px-3 py-3 text-base text-ink placeholder:text-inkmuted/50 focus:border-celtec-green outline-none transition-colors"
               />
             </label>
 
             <label className="block">
-              <span className="text-xs text-inkmuted mb-1 block">WhatsApp</span>
+              <span className="text-sm text-inkmuted mb-1.5 block">WhatsApp</span>
               <input
                 type="tel"
                 name="whatsapp"
                 required
-                className="w-full bg-surface2 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-ink focus:border-celtec-yellow outline-none transition-colors"
+                className="w-full bg-surface2 border border-white/10 rounded-lg px-3 py-3 text-base text-ink placeholder:text-inkmuted/50 focus:border-celtec-green outline-none transition-colors"
               />
             </label>
 
             <button
               type="submit"
-              className="w-full bg-celtec-yellow hover:bg-celtec-yellowdark text-bg font-display font-bold py-3.5 rounded-xl transition-colors"
+              className="w-full bg-celtec-green hover:bg-celtec-greendark text-white font-display font-bold text-lg py-4 rounded-xl transition-colors"
             >
               Enviar
             </button>
@@ -166,16 +168,16 @@ export default function LeadForm({
         {/* PASO 4: Confirmación */}
         {paso === "enviado" && (
           <div className="text-center space-y-3 py-4">
-            <p className="text-3xl">📲</p>
-            <h3 className="font-display font-bold text-xl">¡Listo!</h3>
-            <p className="text-inkmuted text-sm">
+            <p className="text-4xl">📲</p>
+            <h3 className="font-display font-bold text-2xl text-ink">¡Listo!</h3>
+            <p className="text-inkmuted text-base">
               Recibimos tus datos para el{" "}
               <strong className="text-ink">{producto.nombre}</strong>. Te
               contactamos por WhatsApp en breve.
             </p>
             <button
               onClick={onClose}
-              className="mt-2 bg-celtec-yellow hover:bg-celtec-yellowdark text-bg font-display font-bold py-2.5 px-6 rounded-xl"
+              className="mt-2 bg-celtec-green hover:bg-celtec-greendark text-white font-display font-bold py-3 px-8 rounded-xl text-lg"
             >
               Entendido
             </button>
