@@ -86,7 +86,7 @@ export default function Home() {
 
       {/* WHATSAPP FLOTANTE */}
       <a
-        href="https://wa.me/52XXXXXXXXXX"
+        href="https://wa.me/526862901448"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-5 right-5 z-40 bg-celtec-green text-bg w-14 h-14 rounded-full flex items-center justify-center shadow-lg shadow-black/30 text-2xl"
