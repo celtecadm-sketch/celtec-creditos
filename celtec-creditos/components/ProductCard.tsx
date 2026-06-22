@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Producto, calcularPlan } from "@/lib/products";
 
 export default function ProductCard({
@@ -12,14 +13,22 @@ export default function ProductCard({
   onSeleccionar: (id: string) => void;
 }) {
   const { semanas } = calcularPlan(producto);
+  const [expandido, setExpandido] = useState(false);
+
+  function handleClick() {
+    if (!expandido) {
+      setExpandido(true);
+    } else {
+      onSeleccionar(producto.id);
+    }
+  }
 
   return (
-    <button
-      onClick={() => onSeleccionar(producto.id)}
-      className={`group text-left rounded-2xl overflow-hidden bg-light-card border transition-all duration-200 shadow-sm ${
+    <div
+      className={`text-left rounded-2xl overflow-hidden bg-light-card border transition-all duration-200 shadow-sm ${
         seleccionado
           ? "border-celtec-blue ring-2 ring-celtec-blue/30 shadow-md"
-          : "border-light-border hover:border-celtec-blue/40 hover:shadow-md"
+          : "border-light-border"
       }`}
     >
       {/* Imagen */}
@@ -52,7 +61,7 @@ export default function ProductCard({
           </div>
         )}
 
-        {/* Nombre y almacenamiento */}
+        {/* Nombre */}
         <div>
           <h3 className="font-display font-bold text-lg leading-tight text-light-text">
             {producto.nombre}
@@ -60,23 +69,37 @@ export default function ProductCard({
           <p className="text-light-muted text-sm">{producto.almacenamiento}</p>
         </div>
 
-        {/* Beneficio principal */}
+        {/* Beneficio siempre visible */}
         <p className="text-sm font-medium text-light-text/80 leading-snug">
           {producto.beneficio}
         </p>
 
-        {/* Características */}
-        <ul className="space-y-1.5">
-          {producto.caracteristicas.map((c) => (
-            <li key={c} className="flex items-start gap-2 text-xs text-light-muted leading-snug">
-              <span className="text-celtec-green mt-0.5 flex-shrink-0">✓</span>
-              {c}
-            </li>
-          ))}
-        </ul>
+        {/* Características — se expanden al tocar "Ver más" */}
+        {expandido && (
+          <ul className="space-y-1.5 pt-1">
+            {producto.caracteristicas.map((c) => (
+              <li key={c} className="flex items-start gap-2 text-xs text-light-muted leading-snug">
+                <span className="text-celtec-green mt-0.5 flex-shrink-0">✓</span>
+                {c}
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {/* Botón expandir / seleccionar */}
+        <button
+          onClick={handleClick}
+          className={`w-full text-center text-sm font-semibold py-2 rounded-lg transition-colors ${
+            expandido
+              ? "bg-celtec-blue hover:bg-celtec-bluedark text-white"
+              : "bg-light-bg hover:bg-light-border text-celtec-blue border border-celtec-blue/30"
+          }`}
+        >
+          {expandido ? "Elegir este equipo" : "Ver características"}
+        </button>
 
         {/* Precio */}
-        <div className="pt-2 border-t border-light-border flex items-end justify-between">
+        <div className="pt-1 border-t border-light-border flex items-end justify-between">
           <div>
             <p className="text-[11px] text-light-muted font-mono uppercase tracking-wide">
               Abono semanal
@@ -88,6 +111,6 @@ export default function ProductCard({
           <p className="text-xs text-light-muted font-mono">{semanas} semanas</p>
         </div>
       </div>
-    </button>
+    </div>
   );
 }
