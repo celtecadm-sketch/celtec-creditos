@@ -38,23 +38,18 @@ export default function ProductCard({
         <span className="hidden absolute inset-0 flex items-center justify-center text-xs text-light-muted font-mono px-4 text-center leading-snug">
           📷 foto próximamente
         </span>
-
-        {/* Pocas unidades — esquina superior derecha, negro sobre amarillo */}
-        {producto.pocasUnidades && (
-          <span className="absolute top-2 right-2 text-[10px] font-bold uppercase tracking-wide bg-yellow-400 text-black px-2 py-0.5 rounded-full shadow-sm">
-            Pocas unidades
-          </span>
-        )}
       </div>
 
       {/* Info */}
       <div className="p-4 space-y-2">
 
-        {/* Disponible — arriba del nombre, centrado, bold */}
+        {/* DISPONIBLE — grande, prominente, debajo de la imagen */}
         {producto.disponible && (
-          <p className="text-center font-bold text-[11px] uppercase tracking-widest text-celtec-greendark">
-            ✓ Disponible
-          </p>
+          <div className="bg-celtec-green/10 border border-celtec-green/30 rounded-lg py-1.5 text-center">
+            <p className="font-bold text-sm uppercase tracking-widest text-celtec-greendark">
+              ✓ Disponible
+            </p>
+          </div>
         )}
 
         <div>
