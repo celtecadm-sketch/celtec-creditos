@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Producto } from "@/lib/products";
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 
 type Paso = "requisitos" | "tiempo" | "datos" | "enviado" | "error";
 type Disponibilidad = "listo" | "esta-semana" | "proxima-semana" | "no-seguro";
@@ -53,7 +53,7 @@ export default function LeadForm({
     const nombre = (form.elements.namedItem("nombre") as HTMLInputElement).value;
     const whatsapp = (form.elements.namedItem("whatsapp") as HTMLInputElement).value;
 
-    const { error } = await supabase.from("leads").insert({
+    const { error } = await getSupabase().from("leads").insert({
       nombre,
       whatsapp,
       equipo_id: producto.id,
