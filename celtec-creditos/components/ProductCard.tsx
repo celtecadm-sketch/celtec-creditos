@@ -41,9 +41,9 @@ export default function ProductCard({
       </div>
 
       {/* Info */}
-      <div className="p-4 space-y-2">
+      <div className="p-4 space-y-3">
 
-        {/* DISPONIBLE — más grande, bien visible */}
+        {/* Disponible */}
         {producto.disponible && (
           <div className="bg-celtec-green/10 border border-celtec-green/40 rounded-lg py-2 text-center">
             <p className="font-bold text-base uppercase tracking-widest text-celtec-greendark">
@@ -52,6 +52,7 @@ export default function ProductCard({
           </div>
         )}
 
+        {/* Nombre y almacenamiento */}
         <div>
           <h3 className="font-display font-bold text-lg leading-tight text-light-text">
             {producto.nombre}
@@ -59,8 +60,22 @@ export default function ProductCard({
           <p className="text-light-muted text-sm">{producto.almacenamiento}</p>
         </div>
 
-        <p className="text-sm text-light-text/70 leading-snug">{producto.beneficio}</p>
+        {/* Beneficio principal */}
+        <p className="text-sm font-medium text-light-text/80 leading-snug">
+          {producto.beneficio}
+        </p>
 
+        {/* Características */}
+        <ul className="space-y-1.5">
+          {producto.caracteristicas.map((c) => (
+            <li key={c} className="flex items-start gap-2 text-xs text-light-muted leading-snug">
+              <span className="text-celtec-green mt-0.5 flex-shrink-0">✓</span>
+              {c}
+            </li>
+          ))}
+        </ul>
+
+        {/* Precio */}
         <div className="pt-2 border-t border-light-border flex items-end justify-between">
           <div>
             <p className="text-[11px] text-light-muted font-mono uppercase tracking-wide">
