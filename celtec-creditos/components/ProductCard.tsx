@@ -43,10 +43,10 @@ export default function ProductCard({
       {/* Info */}
       <div className="p-4 space-y-2">
 
-        {/* DISPONIBLE — grande, prominente, debajo de la imagen */}
+        {/* DISPONIBLE — más grande, bien visible */}
         {producto.disponible && (
-          <div className="bg-celtec-green/10 border border-celtec-green/30 rounded-lg py-1.5 text-center">
-            <p className="font-bold text-sm uppercase tracking-widest text-celtec-greendark">
+          <div className="bg-celtec-green/10 border border-celtec-green/40 rounded-lg py-2 text-center">
+            <p className="font-bold text-base uppercase tracking-widest text-celtec-greendark">
               ✓ Disponible
             </p>
           </div>
