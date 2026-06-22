@@ -39,23 +39,24 @@ export default function ProductCard({
           📷 foto próximamente
         </span>
 
-        {/* Etiquetas */}
-        <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-          {producto.disponible && (
-            <span className="text-[11px] font-mono uppercase tracking-wide bg-celtec-green/15 text-celtec-greendark border border-celtec-green/30 px-2 py-0.5 rounded-full">
-              Disponible
-            </span>
-          )}
-          {producto.pocasUnidades && (
-            <span className="text-[11px] font-mono uppercase tracking-wide bg-celtec-blue/10 text-celtec-bluedark border border-celtec-blue/20 px-2 py-0.5 rounded-full">
-              Pocas unidades
-            </span>
-          )}
-        </div>
+        {/* Pocas unidades — esquina superior derecha, negro sobre amarillo */}
+        {producto.pocasUnidades && (
+          <span className="absolute top-2 right-2 text-[10px] font-bold uppercase tracking-wide bg-yellow-400 text-black px-2 py-0.5 rounded-full shadow-sm">
+            Pocas unidades
+          </span>
+        )}
       </div>
 
       {/* Info */}
       <div className="p-4 space-y-2">
+
+        {/* Disponible — arriba del nombre, centrado, bold */}
+        {producto.disponible && (
+          <p className="text-center font-bold text-[11px] uppercase tracking-widest text-celtec-greendark">
+            ✓ Disponible
+          </p>
+        )}
+
         <div>
           <h3 className="font-display font-bold text-lg leading-tight text-light-text">
             {producto.nombre}
