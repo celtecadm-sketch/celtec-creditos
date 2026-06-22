@@ -28,54 +28,67 @@ export default function Home() {
 
   return (
     <main>
-      {/* HERO */}
-      <section className="px-5 pt-14 pb-10 text-center max-w-lg mx-auto">
-        <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-celtec-yellow mb-3">
+      {/* HERO — fondo oscuro */}
+      <section className="bg-bg px-5 pt-14 pb-12 text-center">
+        <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-celtec-green mb-3">
           CelTec · Mexicali
         </p>
-        <h1 className="font-display font-bold text-4xl leading-[1.05] mb-4">
+        <h1 className="font-display font-bold text-4xl leading-[1.05] mb-4 text-ink max-w-sm mx-auto">
           Tu próximo teléfono,
           <br />
           pagado a tu ritmo.
         </h1>
-        <p className="text-inkmuted text-base">
+        <p className="text-inkmuted text-base max-w-xs mx-auto">
           Elige tu equipo, mira tu plan al instante y llévatelo sin trámites
           complicados.
         </p>
       </section>
 
-      {/* CATÁLOGO */}
-      <section className="px-5 max-w-5xl mx-auto">
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
-          {productos.map((p) => (
-            <ProductCard
-              key={p.id}
-              producto={p}
-              seleccionado={p.id === seleccionadoId}
-              onSeleccionar={seleccionar}
-            />
-          ))}
+      {/* CATÁLOGO — fondo claro */}
+      <section className="bg-light-bg px-5 py-10">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="font-display font-bold text-2xl text-light-text text-center mb-1">
+            Elige tu equipo
+          </h2>
+          <p className="text-light-muted text-sm text-center mb-6">
+            Toca el que te interese para ver tu plan de pagos.
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+            {productos.map((p) => (
+              <ProductCard
+                key={p.id}
+                producto={p}
+                seleccionado={p.id === seleccionadoId}
+                onSeleccionar={seleccionar}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* SIMULADOR */}
-      <section id="simulador" className="px-5 py-16 max-w-5xl mx-auto">
-        <h2 className="font-display font-bold text-2xl text-center mb-2">
-          Así de claro es tu plan
-        </h2>
-        <p className="text-inkmuted text-center text-sm mb-8">
-          Sin sorpresas. Lo que ves es lo que pagas.
-        </p>
-        <PaymentSimulator
-          producto={seleccionado}
-          onQuieroEsteEquipo={() => setMostrarForm(true)}
-        />
+      {/* SIMULADOR — fondo claro */}
+      <section id="simulador" className="bg-light-bg px-5 pb-16">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="font-display font-bold text-2xl text-light-text text-center mb-2">
+            Así de claro es tu plan
+          </h2>
+          <p className="text-light-muted text-center text-sm mb-8">
+            Sin sorpresas. Lo que ves es lo que pagas.
+          </p>
+          <PaymentSimulator
+            producto={seleccionado}
+            onQuieroEsteEquipo={() => setMostrarForm(true)}
+          />
+        </div>
       </section>
 
-      {/* CONFIANZA */}
-      <section className="px-5 pb-16 max-w-lg mx-auto text-center">
+      {/* CONFIANZA — fondo oscuro */}
+      <section className="bg-bg px-5 py-10 text-center">
+        <p className="text-inkmuted text-sm mb-3 font-mono">
+          Más de 15 años en Mexicali
+        </p>
         <div className="inline-flex items-center gap-2 bg-surface border border-white/10 rounded-full px-4 py-2">
-          <span className="text-celtec-yellow font-mono font-bold text-sm">
+          <span className="text-celtec-green font-mono font-bold text-sm">
             ★ 4.6
           </span>
           <span className="text-inkmuted text-xs font-mono">
@@ -89,14 +102,17 @@ export default function Home() {
         href="https://wa.me/526862901448"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-5 right-5 z-40 bg-celtec-green text-bg w-14 h-14 rounded-full flex items-center justify-center shadow-lg shadow-black/30 text-2xl"
+        className="fixed bottom-5 right-5 z-40 bg-celtec-green text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg shadow-black/30 text-2xl"
         aria-label="Escríbenos por WhatsApp"
       >
         💬
       </a>
 
       {mostrarForm && seleccionado && (
-        <LeadForm producto={seleccionado} onClose={() => setMostrarForm(false)} />
+        <LeadForm
+          producto={seleccionado}
+          onClose={() => setMostrarForm(false)}
+        />
       )}
     </main>
   );
