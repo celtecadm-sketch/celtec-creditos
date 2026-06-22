@@ -1,9 +1,14 @@
-// lib/supabase.ts
-// Conexión única a Supabase — se importa desde cualquier parte del proyecto
+"use client";
 
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+export function getSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+  if (!url || !key) {
+    throw new Error('Supabase no configurado')
+  }
+
+  return createClient(url, key)
+}
