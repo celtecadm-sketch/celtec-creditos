@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { Producto } from "@/lib/products";
+import { supabase } from "@/lib/supabase";
 
-type Paso = "requisitos" | "tiempo" | "datos" | "enviado";
+type Paso = "requisitos" | "tiempo" | "datos" | "enviado" | "error";
 type Disponibilidad = "listo" | "esta-semana" | "proxima-semana" | "no-seguro";
 
 const OPCIONES_TIEMPO: { value: Disponibilidad; label: string }[] = [
@@ -28,6 +29,7 @@ export default function LeadForm({
 }) {
   const [paso, setPaso] = useState<Paso>("requisitos");
   const [disponibilidad, setDisponibilidad] = useState<Disponibilidad | null>(null);
+  const [guardando, setGuardando] = useState(false);
 
   function elegirSiTengo() {
     setDisponibilidad("listo");
@@ -43,13 +45,29 @@ export default function LeadForm({
     setPaso("datos");
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setGuardando(true);
+
     const form = e.currentTarget;
     const nombre = (form.elements.namedItem("nombre") as HTMLInputElement).value;
     const whatsapp = (form.elements.namedItem("whatsapp") as HTMLInputElement).value;
-    console.log({ productoId: producto.id, nombre, whatsapp, disponibilidad });
-    setPaso("enviado");
+
+    const { error } = await supabase.from("leads").insert({
+      nombre,
+      whatsapp,
+      equipo_id: producto.id,
+      equipo_nombre: `${producto.nombre} ${producto.almacenamiento}`,
+      disponibilidad: disponibilidad ?? "no-seguro",
+    });
+
+    setGuardando(false);
+
+    if (error) {
+      setPaso("error");
+    } else {
+      setPaso("enviado");
+    }
   }
 
   return (
@@ -77,7 +95,6 @@ export default function LeadForm({
             <h3 className="font-display font-bold text-2xl text-ink">
               Para tu plan necesitarás:
             </h3>
-
             <ul className="space-y-3">
               {REQUISITOS.map((r) => (
                 <li key={r} className="flex items-center gap-3">
@@ -86,11 +103,9 @@ export default function LeadForm({
                 </li>
               ))}
             </ul>
-
             <p className="font-display font-bold text-xl text-ink pt-2">
               ¿Ya cuentas con todo esto?
             </p>
-
             <div className="flex flex-col gap-3 pt-1">
               <button
                 onClick={elegirSiTengo}
@@ -135,32 +150,30 @@ export default function LeadForm({
             <p className="text-inkmuted">
               Déjanos tus datos y te contactamos por WhatsApp.
             </p>
-
             <label className="block">
               <span className="text-sm text-inkmuted mb-1.5 block">Nombre completo</span>
               <input
                 type="text"
                 name="nombre"
                 required
-                className="w-full bg-surface2 border border-white/10 rounded-lg px-3 py-3 text-base text-ink placeholder:text-inkmuted/50 focus:border-celtec-green outline-none transition-colors"
+                className="w-full bg-surface2 border border-white/10 rounded-lg px-3 py-3 text-base text-ink focus:border-celtec-green outline-none transition-colors"
               />
             </label>
-
             <label className="block">
               <span className="text-sm text-inkmuted mb-1.5 block">WhatsApp</span>
               <input
                 type="tel"
                 name="whatsapp"
                 required
-                className="w-full bg-surface2 border border-white/10 rounded-lg px-3 py-3 text-base text-ink placeholder:text-inkmuted/50 focus:border-celtec-green outline-none transition-colors"
+                className="w-full bg-surface2 border border-white/10 rounded-lg px-3 py-3 text-base text-ink focus:border-celtec-green outline-none transition-colors"
               />
             </label>
-
             <button
               type="submit"
-              className="w-full bg-celtec-green hover:bg-celtec-greendark text-white font-display font-bold text-lg py-4 rounded-xl transition-colors"
+              disabled={guardando}
+              className="w-full bg-celtec-green hover:bg-celtec-greendark disabled:opacity-60 text-white font-display font-bold text-lg py-4 rounded-xl transition-colors"
             >
-              Enviar
+              {guardando ? "Enviando..." : "Enviar"}
             </button>
           </form>
         )}
@@ -181,6 +194,23 @@ export default function LeadForm({
             >
               Entendido
             </button>
+          </div>
+        )}
+
+        {/* PASO 5: Error */}
+        {paso === "error" && (
+          <div className="text-center space-y-3 py-4">
+            <p className="text-4xl">⚠️</p>
+            <h3 className="font-display font-bold text-2xl text-ink">Algo salió mal</h3>
+            <p className="text-inkmuted text-base">
+              No pudimos guardar tus datos. Por favor escríbenos directo por WhatsApp.
+            </p>
+            <a
+              href="https://wa.me/526862901448"
+              className="inline-block mt-2 bg-celtec-green hover:bg-celtec-greendark text-white font-display font-bold py-3 px-8 rounded-xl text-lg"
+            >
+              Escribir por WhatsApp
+            </a>
           </div>
         )}
       </div>
