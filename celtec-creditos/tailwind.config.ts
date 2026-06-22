@@ -8,15 +8,25 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: "#121214",
-        surface: "#1C1D22",
-        surface2: "#26272E",
-        ink: "#F4F4F2",
-        inkmuted: "#9B9CA3",
+        // Dark — hero y header
+        bg: "#111827",
+        surface: "#1C2333",
+        surface2: "#26303F",
+        ink: "#F9FAFB",
+        inkmuted: "#9CA3AF",
+        // Light — catálogo y simulador
+        light: {
+          bg: "#F9FAFB",
+          card: "#FFFFFF",
+          border: "#E5E7EB",
+          text: "#111827",
+          muted: "#6B7280",
+        },
         celtec: {
-          yellow: "#FFC72C",
-          yellowdark: "#E0A800",
-          green: "#4ADE80",
+          blue: "#3B82F6",
+          bluedark: "#2563EB",
+          green: "#22C55E",
+          greendark: "#16A34A",
         },
         dashed: "rgba(244,244,242,0.18)",
       },
