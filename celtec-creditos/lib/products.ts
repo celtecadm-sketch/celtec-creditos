@@ -1,11 +1,3 @@
-// lib/products.ts
-//
-// CAPA DE DATOS — punto único de conexión.
-// Hoy: regresa un arreglo fijo (los 5 modelos de Luis).
-// Cuando exista la base SQL: solo se reemplaza el contenido de getProductos()
-// por una consulta real (fetch a una API, conexión a la DB, etc.)
-// El resto de la página (catálogo, simulador, tarjetas) NO se toca.
-
 export type Producto = {
   id: string;
   nombre: string;
@@ -15,8 +7,9 @@ export type Producto = {
   abonoSemanal: number;
   disponible: boolean;
   pocasUnidades: boolean;
-  imagen: string; // ruta dentro de /public/images
-  beneficio: string; // copy emocional corto, no ficha técnica
+  imagen: string;
+  beneficio: string;
+  caracteristicas: string[];
 };
 
 const PRODUCTOS: Producto[] = [
@@ -30,7 +23,13 @@ const PRODUCTOS: Producto[] = [
     disponible: true,
     pocasUnidades: false,
     imagen: "/images/samsung-a07.jpg",
-    beneficio: "Espacio de sobra para tus fotos, videos y apps de siempre.",
+    beneficio: "Fotos claras en cualquier momento del día.",
+    caracteristicas: [
+      "Pantalla amplia y fluida para ver videos sin cansarte",
+      "Respuesta rápida para uso diario sin complicaciones",
+      "Batería que te acompaña todo el día",
+      "Ideal para redes, WhatsApp y contenido",
+    ],
   },
   {
     id: "redmi-a5",
@@ -42,7 +41,13 @@ const PRODUCTOS: Producto[] = [
     disponible: true,
     pocasUnidades: false,
     imagen: "/images/redmi-a5.jpg",
-    beneficio: "Rápido para el día a día, sin trabarse a media llamada.",
+    beneficio: "Ligero y práctico para el día a día.",
+    caracteristicas: [
+      "Rendimiento eficiente para lo que más usas",
+      "Ligero y práctico para el día a día",
+      "Batería que rinde sin preocuparte",
+      "Ideal como equipo funcional y económico",
+    ],
   },
   {
     id: "motorola-g06-64",
@@ -54,7 +59,13 @@ const PRODUCTOS: Producto[] = [
     disponible: true,
     pocasUnidades: true,
     imagen: "/images/motorola-g06-64.jpg",
-    beneficio: "Batería que aguanta todo tu turno, de la mañana a la noche.",
+    beneficio: "Experiencia limpia y rápida, sin apps innecesarias.",
+    caracteristicas: [
+      "Fluidez en uso diario y buena respuesta",
+      "Batería confiable para todo el día",
+      "Espacio suficiente para fotos, apps y videos",
+      "Sin bloatware — solo lo que necesitas",
+    ],
   },
   {
     id: "motorola-g06-128",
@@ -67,6 +78,12 @@ const PRODUCTOS: Producto[] = [
     pocasUnidades: true,
     imagen: "/images/motorola-g06-128.jpg",
     beneficio: "El doble de espacio para que nunca te diga 'memoria llena'.",
+    caracteristicas: [
+      "Experiencia limpia y rápida sin apps innecesarias",
+      "128 GB — fotos, videos y apps sin preocuparte por el espacio",
+      "Batería confiable para todo el día",
+      "Fluidez garantizada en uso diario",
+    ],
   },
   {
     id: "samsung-a17",
@@ -78,12 +95,17 @@ const PRODUCTOS: Producto[] = [
     disponible: true,
     pocasUnidades: false,
     imagen: "/images/samsung-a17.jpg",
-    beneficio: "Cámara que se ve bien en tus redes, sin esfuerzo extra.",
+    beneficio: "Rendimiento estable para apps, series y multitarea.",
+    caracteristicas: [
+      "Fotos claras en cualquier momento del día",
+      "Pantalla cómoda para ver series y navegar",
+      "Rendimiento estable para apps y multitarea",
+      "Batería duradera para uso continuo",
+    ],
   },
 ];
 
 export async function getProductos(): Promise<Producto[]> {
-  // Cuando exista la base SQL, aquí se hace el fetch/consulta real.
   return PRODUCTOS;
 }
 
