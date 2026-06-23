@@ -52,23 +52,38 @@ export default function LeadForm({
     const form = e.currentTarget;
     const nombre = (form.elements.namedItem("nombre") as HTMLInputElement).value;
     const whatsapp = (form.elements.namedItem("whatsapp") as HTMLInputElement).value;
+    const disp = disponibilidad ?? "no-seguro";
 
     try {
+      // 1. Guardar en Supabase
       const supabase = getSupabase();
       const { error } = await supabase.from("leads").insert({
         nombre,
         whatsapp,
         equipo_id: producto.id,
         equipo_nombre: `${producto.nombre} ${producto.almacenamiento}`,
-        disponibilidad: disponibilidad ?? "no-seguro",
+        disponibilidad: disp,
       });
 
       if (error) {
         console.error("Supabase error:", JSON.stringify(error));
         setPaso("error");
-      } else {
-        setPaso("enviado");
+        return;
       }
+
+      // 2. Mandar mensaje por WhatsApp via ManyChat
+      await fetch("/api/notify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nombre,
+          whatsapp,
+          equipoNombre: `${producto.nombre} ${producto.almacenamiento}`,
+          disponibilidad: disp,
+        }),
+      });
+
+      setPaso("enviado");
     } catch (err) {
       console.error("Error inesperado:", err);
       setPaso("error");
