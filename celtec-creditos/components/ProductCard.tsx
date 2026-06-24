@@ -50,18 +50,7 @@ export default function ProductCard({
       </div>
 
       {/* Info */}
-      <div className="p-4 space-y-3">
-
-        {/* Disponible */}
-        {producto.disponible && (
-          <div className="bg-celtec-green/10 border border-celtec-green/40 rounded-lg py-2 text-center">
-            <p className="font-bold text-base uppercase tracking-widest text-celtec-greendark">
-              ✓ Disponible
-            </p>
-          </div>
-        )}
-
-        {/* Nombre */}
+      <div className="p-4 space-y-2">
         <div>
           <h3 className="font-display font-bold text-lg leading-tight text-light-text">
             {producto.nombre}
@@ -69,12 +58,11 @@ export default function ProductCard({
           <p className="text-light-muted text-sm">{producto.almacenamiento}</p>
         </div>
 
-        {/* Beneficio siempre visible */}
         <p className="text-sm font-medium text-light-text/80 leading-snug">
           {producto.beneficio}
         </p>
 
-        {/* Características — se expanden al tocar "Ver más" */}
+        {/* Características expandibles */}
         {expandido && (
           <ul className="space-y-1.5 pt-1">
             {producto.caracteristicas.map((c) => (
@@ -86,7 +74,7 @@ export default function ProductCard({
           </ul>
         )}
 
-        {/* Botón expandir / seleccionar */}
+        {/* Botón */}
         <button
           onClick={handleClick}
           className={`w-full text-center text-sm font-semibold py-2 rounded-lg transition-colors ${
@@ -95,7 +83,7 @@ export default function ProductCard({
               : "bg-light-bg hover:bg-light-border text-celtec-blue border border-celtec-blue/30"
           }`}
         >
-          {expandido ? "Elegir este equipo" : "Ver características"}
+          {expandido ? "Elegir este equipo" : "Ver características / Ordenar"}
         </button>
 
         {/* Precio */}
